@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- styles  -->
+<!-- bootstrap -->
+<link rel="stylesheet" href="./libs/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="./styles/style.css">
+<script src="./libs/jquery/jquery-3.3.1.js"></script>
+<script src='./libs/voice/jquery.voicerss-tts.min.js'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+	<style>
+		.arrow{
+			color:#005cbf;
+		}
+		.status{
+			height: 10px;
+			width:10px;
+			margin-top:8px;
+			border-radius: 5px;
+			margin-left:6px;
+		}
+		.online{
+			background-color:green;
+		}
+		.offline{
+			background-color:red;
+		}
+		.status_text{
+			font-size:14px;
+		}
+	</style>
+<!-- end styles -->
+</head>
+<body>
+<div class="container" id="home">
+	<div class="row mt-5 col-lg-12">
+		<div class="col-lg-4">
+			<img src="./images/logo.png" alt="Logo"  height='20px'>
+		</div>
+		<div class="col-lg-2 offset-lg-6 ">
+			 <div class="col-lg-12 ">
+				 <div class="custom-btn row float-right">
+				 	<div class="status"></div>
+				 </div>
+			 </div>
+		</div>
+	</div>
+	<!-- verify -->
+	<div class="row col-lg-12 mt-3">
+		<!-- the verify button goes here -->
+		<div class="col-lg-12" id="branch">Equity Bank — Kenyatta University</div><br>
+		<div class="col-lg-12 text-muted" id="date"><small class="text-muted">Thursday, 23 January 2020</small></div>
+	</div>
+	<!-- end verify -->
+	<!-- body -->
+	<div class="row col-lg-12 mt-5" id="services" style="margin-left: 1px">
+		<div class="col-lg-8">
+
+			<div class="row" id="video_frame">
+			</div>
+		
+		</div>
+		<div class="col-lg-4">
+			<h5 class="text-muted">Tickets Order</h5>
+<!--			<h5 class="text-muted" id="activeTicket">—</h5>-->
+<!--			<h5 class="text-muted" id="activeTicket"><h5>TICKET No |  TELLER No </h5></h5>-->
+			<hr>
+			<div id="actives">
+
+			</div>
+		</div>
+	</div>
+	<div class="row col-lg-12">
+		<div class='col-lg-3'>
+			<div class="col-lg-12 teller_number_display" >
+				<h5 id="tellerOne" >Teller —</h5><hr>
+				<div id="ticketsOne"></div>
+			</div>
+		</div>
+		<div class='col-lg-3'>
+			<div class="col-lg-12 teller_number_display" >
+				<h5 id="tellerTwo" >Teller —</h5><hr>
+				<div id="ticketsTwo"></div>
+			</div>
+		</div>
+		<div class='col-lg-3'>
+			<div class="col-lg-12 teller_number_display" >
+				<h5 id="tellerThree" >Teller —</h5><hr>
+				<div id="ticketsThree"></div>
+			</div>
+		</div>
+		<div class='col-lg-3'>
+			<div class="col-lg-12 teller_number_display" >
+				<h5 id="tellerFour" >Teller —</h5><hr>
+				<div id="ticketsFour"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!--model-->
+
+
+
+<!--end modal test-->
+<script src="./libs/popper/popper.js"></script>
+<script src="./libs/bootstrap/js/bootstrap.min.js"></script>
+<script src="./scripts/main.js"></script>
+</body>
+</html> 
+
