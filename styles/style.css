@@ -27,7 +27,7 @@ html{
   width:29%;
 }
 #video_frame{
-  height :20rem;
+  height :25rem;
   border:3px solid lightgray;
   border-radius: 10px;
   margin-bottom: 30px;
@@ -38,7 +38,7 @@ html{
   border:3px solid lightgray;
   padding:5px 10px;
   border-radius:5px;
-  height:15rem
+  height:10rem
 
 }
 

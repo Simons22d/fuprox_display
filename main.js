@@ -11,11 +11,11 @@ const {globalShortcut } = require('electron')
 function createWindows() {
     
     win = new BrowserWindow({
-                height:700,
-                width: 1200, 
-                minHeight:700,
-                minWidth: 1200,
-                allowRendererProcessReuse : true
+               fullscreen : true,
+                allowRendererProcessReuse : true,
+                alwaysOnTop : true,
+                minimizable : false,
+                resizable :false
     })
 
     // win.webContents.openDevTools()
