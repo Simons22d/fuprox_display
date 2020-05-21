@@ -171,5 +171,39 @@ $("#verifyKey").on("click",()=>{
 		$("#message_key").html(`<div class="alert alert-danger" role="alert">Key cannot Be empty</div>`)
 	}
 })
+var index = 1;
+// looping through videos
+function myHandler () {
+	console.log("Ended playback.")
+	index++;
+	console.log("this video >>>>>>",index)
+	if(index == (videoCount-1)){
+		index = 0;
+		videoPlay(index);
+	}else{
+		videoPlay(index-1);
+	}
+	
+        
+}
 
+//  working woth videos for the ads
+// we are going to get this of videos from the database
+var videoSource = new Array();
+videoSource[0]='videos/one.mp4';
+videoSource[1]='videos/two.mp4';
+videoSource[2]='videos/three.mp4';
+var videoCount = videoSource.length;
+console.log("video count", videoCount)
+
+document.getElementById("myVideo").setAttribute("src",videoSource[0]);
+// Create a function to load and play the videos.
+ 
+const videoPlay = (videoNum) => {
+	document.getElementById("myVideo").setAttribute("src",videoSource[videoNum]);
+	document.getElementById("myVideo").load();
+	document.getElementById("myVideo").play();
+}
+
+document.getElementById('myVideo').addEventListener('ended',myHandler,false);
 
