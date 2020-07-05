@@ -30,6 +30,7 @@ function createWindows() {
             nodeIntegration: true
         }
     }))
+    win.setMenu(null)
 }
 
 
