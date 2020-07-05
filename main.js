@@ -9,14 +9,16 @@ let token;
 const {globalShortcut } = require('electron')
 
 function createWindows() {
-    
+    // fullscreen : true,
     win = new BrowserWindow({
-               fullscreen : true,
+                height:900,
+                width: 1500,    
                 allowRendererProcessReuse : true,
-                alwaysOnTop : true,
-                minimizable : false,
-                resizable :false
+                autoHideMenuBar  : true,
     })
+    // alwaysOnTop : true,
+    // minimizable : false,
+    // resizable :false,
 
     // win.webContents.openDevTools()
 

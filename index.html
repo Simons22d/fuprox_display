@@ -7,29 +7,32 @@
 <link rel="stylesheet" href="./libs/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="./styles/style.css">
 <script src="./libs/jquery/jquery-3.3.1.js"></script>
-<script src='./libs/voice/jquery.voicerss-tts.min.js'></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
-	<style>
-		.arrow{
-			color:#005cbf;
-		}
-		.status{
-			height: 10px;
-			width:10px;
-			margin-top:8px;
-			border-radius: 5px;
-			margin-left:6px;
-		}
-		.online{
-			background-color:green;
-		}
-		.offline{
-			background-color:red;
-		}
-		.status_text{
-			font-size:14px;
-		}
-	</style>
+<link href="./libs/video/video-js.css" rel="stylesheet" />
+<script src="https://unpkg.com/@videojs/http-streaming/dist/videojs-http-streaming.js"></script>
+
+
+<style>
+	.arrow{
+		color:#005cbf;
+	}
+	.status{
+		height: 10px;
+		width:10px;
+		margin-top:8px;
+		border-radius: 5px;
+		margin-left:6px;
+	}
+	.online{
+		background-color:green;
+	}
+	.offline{
+		background-color:red;
+	}
+	.status_text{
+		font-size:14px;
+	}
+</style>
+
 <!-- end styles -->
 </head>
 <body>
@@ -55,7 +58,22 @@
 	<div class="row col-lg-12 mt-5" id="services" style="margin-left: 1px">
 		<div class="col-lg-8">
 			<div class="row">
-				<video controls autoplay id="myVideo" ></video>
+				</head>		  
+			  <body>			
+				<video
+					id="myVideo"
+					class="video-js"
+					controls
+					autoplay
+					width="640" height="264"
+					data-setup='{}'
+
+				>
+			  </video>
+			  <!-- 
+				data-setup='{ "techOrder": ["youtube", "html5"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=xjS6SftYQaQ"}] }'
+				<link href="https://unpkg.com/video.js/dist/video-js.css" rel="stylesheet">
+			   -->
 			</div>
 		</div>
 		<div class="col-lg-4">
@@ -65,7 +83,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="row col-lg-12">
+	<div class="row col-lg-12" id="the_divs">
 		<div class='col-lg-3'>
 			<div class="col-lg-12 teller_number_display" >
 				<h5 id="tellerOne" >Teller —</h5><hr>
@@ -92,10 +110,7 @@
 		</div>
 	</div>
 </div>
-
-
 <!--model-->
-
 <div id="myModal" class="modal" style="font-family: 'Avenir Next'">
 	<div class="modal-content" >
 		<span class="close" style="text-align:right">&times;</span>
@@ -124,11 +139,12 @@
 	</div>
 </div>
 
-
 <!--end modal test-->
-<script src="./libs/popper/popper.js"></script>
-<script src="./libs/bootstrap/js/bootstrap.min.js"></script>
-<script src="./scripts/main.js"></script>
+	<script src="./libs/popper/popper.js"></script>
+	<script src="./libs/bootstrap/js/bootstrap.min.js"></script>
+	<script src="./libs/video/video.js"></script>
+	<script src="./libs/youtube/Youtube.min.js"></script>
+	<script src="./scripts/main.js"></script>
 </body>
 </html> 
 

@@ -28,8 +28,9 @@ html{
 }
 
 
-#myVideo{
-  height :25rem;
+#myVideo{ 
+  width:50rem;
+  height:25rem;
   margin-bottom: 30px;
 }
 
