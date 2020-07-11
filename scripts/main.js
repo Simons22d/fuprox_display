@@ -95,7 +95,6 @@ const getActiveTickets = (call=12) => {
 			
 			data.map((item,index)=>{
 				let teller_number  = Number(item.teller)
-				
 				if(data.length - 1 === index){
 					$(`#${tickets[index]}`).html(`
 						<h3>${item.code}${item.ticket}</h3><br>
@@ -105,8 +104,6 @@ const getActiveTickets = (call=12) => {
 						<h3>Teller ${item.teller}</h3>
 					`)
 
-					actives += `<h3 class="text-muted" id="activeTicket"><h3>${item.code}${item.ticket}  —> Teller No.${item.teller}</h3></h3>`
-
 				}else{
 					$(`#${tickets[index]}`).html(`
 						<h3>${item.code}${item.ticket}</h3><br>
@@ -115,9 +112,6 @@ const getActiveTickets = (call=12) => {
 					$(`#${mapper[index]}`).html(`
 						<h3>Teller ${item.teller}</h3>
 					`)
-
-					actives += `<h3 class="text-muted" id="activeTicket" ><h3>${item.code}${item.ticket}  —> Teller No.${item.teller}</h3></h3>`
-
 				}
 			})
 			// handle.html(final)
@@ -126,8 +120,39 @@ const getActiveTickets = (call=12) => {
 	})
 };
 
+const getActiveTickets_side = (call=12) => {
+	getData(`${link}/get/active/tickets/side`,"POST",{"branch_id":branch_id},(data)=>{
+	let final = "";
+	let count = 0;
+	for(x in data){count++;}
+	if(count){
+		let handle = $("#ticketsOne")
+		let activesHandle = $("#actives")
+		// count data final
+		let final = ""
+		let actives = ""
+		
+		data.map((item,index)=>{
+			let teller_number  = Number(item.teller)
+			if(data.length - 1 === index){
+				actives += `<h3 class="text-muted" id="activeTicket"><h3>${item.code}${item.ticket}  —> Teller No.${item.teller}</h3></h3>`
+			}else{
+				actives += `<h3 class="text-muted" id="activeTicket" ><h3>${item.code}${item.ticket}  —> Teller No.${item.teller}</h3></h3>`
+			}
+		})
+		// handle.html(final)
+		activesHandle.html(actives)
+	}
+})
+};
+
 setInterval(()=>{
 	getActiveTickets()
+
+},1000)
+
+setInterval(()=>{
+	getActiveTickets_side()
 },1000)
 
 $("#settings").on("click",()=>{
