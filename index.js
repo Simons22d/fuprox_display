@@ -6,17 +6,14 @@ var carouselDisplaying;
 var screenSize;
 setScreenSize();
 var lengthOfSlide;
-var moving = true;
-carouselContent.addEventListener('mousedown', seeMovement);
-
-var initialX;
-var initialPos;
 
 function addClone() {
+  console.log("called")
    var lastSlide = carouselContent.lastElementChild.cloneNode(true);
    lastSlide.style.left = (-lengthOfSlide) + "px";
    carouselContent.insertBefore(lastSlide, carouselContent.firstChild);
 }
+addClone();
 
 function removeClone() {
   var firstSlide = carouselContent.firstElementChild;
@@ -34,13 +31,14 @@ function moveSlidesRight() {
   });
   addClone();
 }
-// moveSlidesRight();
+moveSlidesRight();
 
 function moveSlidesLeft() {
   var slides = document.querySelectorAll('.slide');
   var slidesArray = Array.prototype.slice.call(slides);
   slidesArray = slidesArray.reverse();
   var maxWidth = (slidesArray.length - 1) * lengthOfSlide;
+  console.log(maxWidth)
 
   slidesArray.forEach(function(el, i){
     maxWidth -= lengthOfSlide;
@@ -58,11 +56,13 @@ function setScreenSize() {
   } else {
     carouselDisplaying = 1;
   }
-  c
+  console.log(carouselDisplaying)
   getScreenSize();
+  
 }
 
 function getScreenSize() {
+  
   var slides = document.querySelectorAll('.slide');
   var slidesArray = Array.prototype.slice.call(slides);
   lengthOfSlide = ( carousel.offsetWidth  / carouselDisplaying );
@@ -78,10 +78,10 @@ function getScreenSize() {
 var rightNav = document.querySelector('.nav-right');
 // rightNav.addEventListener('click', moveLeft);
 setInterval(()=>{
-  moveLeft()()
-},1000)
+  moveLeft()
+},2000)
 
-
+var moving = true;
 function moveRight() {
   if ( moving ) {
     moving = false;
@@ -101,8 +101,8 @@ function activateAgain() {
   firstSlide.removeEventListener('transitionend', activateAgain);
 }
 
-// var leftNav = document.querySelector('.nav-left');
-// leftNav.addEventListener('click', moveRight);
+var leftNav = document.querySelector('.nav-left');
+leftNav.addEventListener('click', moveRight);
 
 // var moveLeftAgain = true;
 
@@ -127,6 +127,12 @@ function replaceToEnd() {
 }
 
 
+
+
+carouselContent.addEventListener('mousedown', seeMovement);
+
+var initialX;
+var initialPos;
 function seeMovement(e) {
   initialX = e.clientX;
   getInitialPos();

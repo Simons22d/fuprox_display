@@ -29,7 +29,6 @@ html{
 }
 
 
-
 .outset_card{
   margin-right:46px;
   margin-bottom: 50px;
@@ -41,8 +40,8 @@ html{
 
 
 #myVideo{ 
-  width:50rem;
-  height:25rem;
+  width:70rem;
+  height:40rem;
   margin-bottom: 30px;
 }
 
@@ -56,7 +55,6 @@ video::-webkit-media-controls-enclosure {
   padding:5px 10px;
   border-radius:5px;
   height:10rem
-
 }
 
 /* The Modal (background) */
@@ -85,13 +83,10 @@ video::-webkit-media-controls-enclosure {
     padding-bottom:3%;
     border-radius:15px;
 }
+
 .modal-content >.modal-info{
     font-size:12px;
 }
-
-
-
-
 
 /* The Close Button */
 .close {
@@ -100,7 +95,6 @@ video::-webkit-media-controls-enclosure {
     font-size: 20px;
     font-weight: bold;
 }
-
 
 .close:hover,
 .close:focus {

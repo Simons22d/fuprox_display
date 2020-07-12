@@ -1,53 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- styles  -->
-<!-- bootstrap -->
-<link rel="stylesheet" href="./libs/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="./styles/style.css">
-<script src="./libs/jquery/jquery-3.3.1.js"></script>
-<link href="./libs/video/video-js.css" rel="stylesheet" />
-<script src="https://unpkg.com/@videojs/http-streaming/dist/videojs-http-streaming.js"></script>
-<!-- corousel -->
-<link rel="stylesheet" href="./styles/index.css">
-
-
-
-<style>
-	.arrow{
-		color:#005cbf;
-	}
-	.status{
-		height: 10px;
-		width:10px;
-		margin-top:8px;
-		border-radius: 5px;
-		margin-left:6px;
-	}
-	.online{
-		background-color:green;
-	}
-	.offline{
-		background-color:red;
-	}
-	.status_text{
-		font-size:14px;
-	}
-</style>
-
-<!-- end styles -->
-</head>
-<body>
-<div class="container_ gellix" id="home">
+<div class="container gellix" id="home">
 	<div class="row mt-5 col-lg-12">
 
-		<div class="col-lg-4"><img src="./images/logo.png" alt="Logo"  height='35px'></div>
+		<div class="col-lg-4"><img src="./images/logo.png" alt="Logo"  height='20px'></div>
 		<div class="col-lg-1 offset-6">
 		</div>
 
 		<div class="col-lg-1 float-right">
-			<img src="./images/manageSolutions.png" id="settings" height="25px">
+			<img src="./images/manageSolutions.png" id="settings" height="15px">
 		</div>
 
 	</div>
@@ -56,18 +15,22 @@
 	<div class="row col-lg-12 mt-3">
 		<!-- the verify button goes here -->
 		<div class="col-lg-12" id="branch">—</div><br>
-		<div class="col-lg-12 text-muted" ><p class="text-muted" id="date">—</p></div>
+		<div class="col-lg-12 text-muted" ><small class="text-muted" id="date">—</small></div>
 	</div>
 	<div class="row col-lg-12 mt-5" id="services" style="margin-left: 1px">
 		<div class="col-lg-8">
 			<div class="row">
 				</head>		  
 			  <body>			
-				<video id="myVideo" class="video-js"
+				<video
+					id="myVideo"
+					class="video-js"
 					controls
 					autoplay
 					width="640" height="264"
-					data-setup='{}'>
+					data-setup='{}'
+
+				>
 			  </video>
 			  <!-- 
 				data-setup='{ "techOrder": ["youtube", "html5"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=xjS6SftYQaQ"}] }'
@@ -83,19 +46,54 @@
 		</div>
 	</div>
 	<div class="row" id="the_divs">
-		<div class="container_slider">
-			<div class="carousel" id="roller_list">
-					<div class="carousel-content">
-						<div class="slide">
-							<div class="radii" >
-									<p class="headers">TELLER 00</p>
-									<p class="sep"> — </p>
-									<p class="tickets">FPXR 00</p>
-							</div>
-						</div>
-					</div>
-			</div>		
-		</div>	
+
+		<!-- start -->
+		<!-- <div class='col-lg-3'>
+			<div class="col-lg-12 teller_number_display" >
+				<h5 id="tellerOne" >Teller —</h5><hr>
+				<div id="ticketsOne"></div>
+			</div>
+		</div>
+		<div class='col-lg-3'>
+			<div class="col-lg-12 teller_number_display" >
+				<h5 id="tellerTwo" >Teller —</h5><hr>
+				<div id="ticketsTwo"></div>
+			</div>
+		</div>
+		<div class='col-lg-3'>
+			<div class="col-lg-12 teller_number_display" >
+				<h5 id="tellerThree" >Teller —</h5><hr>
+				<div id="ticketsThree"></div>
+			</div>
+		</div>
+		<div class='col-lg-3'>
+			<div class="col-lg-12 teller_number_display" >
+				<h5 id="tellerFour" >Teller —</h5><hr>
+				<div id="ticketsFour"></div>
+			</div>
+		</div> -->
+		<!-- end -->
+
+		<div class="carousel-content">
+              
+			<div class="slide slide-1">
+			  <div>cat</div>
+			</div>
+			<div class="slide slide-2">
+			  <div>dog</div>
+			</div>
+			<div class="slide slide-3">
+			  <div>mouse</div>
+			</div>
+			<div class="slide slide-4">
+			  <div>hen</div>
+			</div>
+			<div class="slide slide-5">
+			  <div>bug</div>
+			</div>
+		</div>
+	</div>
+</div>
 <!--model-->
 <div id="myModal" class="modal" style="font-family: 'Avenir Next'">
 	<div class="modal-content" >
@@ -124,16 +122,3 @@
 		</div>
 	</div>
 </div>
-
-<!--end modal test-->
-	<script src="./libs/popper/popper.js"></script>
-	<script src="./libs/bootstrap/js/bootstrap.min.js"></script>
-	<script src="./libs/video/video.js"></script>
-	<script src="./libs/youtube/Youtube.min.js"></script>
-	<script src="./scripts/main.js"></script>
-	<!-- <script src="./scripts/slide.js"></script> -->
-	<!-- <script src="./index.js"></script> -->
-
-</body>
-</html> 
-

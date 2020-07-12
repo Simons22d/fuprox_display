@@ -1,3 +1,177 @@
+// slides
+
+var carousel = document.querySelector('.carousel');
+var carouselContent = document.querySelector('.carousel-content');
+var slides = document.querySelectorAll('.slide');
+var arrayOfSlides = Array.prototype.slice.call(slides);
+var carouselDisplaying;
+var screenSize;
+setScreenSize();
+var lengthOfSlide;
+
+function addClone() {
+   var lastSlide = carouselContent.lastElementChild.cloneNode(true);
+   lastSlide.style.left = (-lengthOfSlide) + "px";
+   carouselContent.insertBefore(lastSlide, carouselContent.firstChild);
+}
+
+function removeClone() {
+  var firstSlide = carouselContent.firstElementChild;
+  firstSlide.parentNode.removeChild(firstSlide);
+}
+
+function moveSlidesRight() {
+  var slides = document.querySelectorAll('.slide');
+  var slidesArray = Array.prototype.slice.call(slides);
+  var width = 0;
+
+  slidesArray.forEach(function(el, i){
+    el.style.left = width + "px";
+    width += lengthOfSlide;
+  });
+  addClone();
+}
+moveSlidesRight();
+
+function moveSlidesLeft() {
+  var slides = document.querySelectorAll('.slide');
+  var slidesArray = Array.prototype.slice.call(slides);
+  slidesArray = slidesArray.reverse();
+  var maxWidth = (slidesArray.length - 1) * lengthOfSlide;
+
+  slidesArray.forEach(function(el, i){
+    maxWidth -= lengthOfSlide;
+    el.style.left = maxWidth + "px";
+  });
+}
+
+window.addEventListener('resize', setScreenSize);
+
+function setScreenSize() {
+  if ( window.innerWidth >= 500 ) {
+    carouselDisplaying = 6;
+  } else if ( window.innerWidth >= 300 ) {
+    carouselDisplaying = 2;
+  } else {
+    carouselDisplaying = 1;
+  }
+  getScreenSize();
+}
+
+function getScreenSize() {
+  var slides = document.querySelectorAll('.slide');
+  var slidesArray = Array.prototype.slice.call(slides);
+  lengthOfSlide = ( carousel.offsetWidth  / carouselDisplaying );
+  var initialWidth = -lengthOfSlide;
+  slidesArray.forEach(function(el) {
+    el.style.width = lengthOfSlide + "px";
+    el.style.left = initialWidth + "px";
+    initialWidth += lengthOfSlide;
+  });
+}
+
+
+var rightNav = document.querySelector('.nav-right');
+setInterval(()=>{
+  moveLeft()
+},1000)
+
+var moving = true;
+function moveRight() {
+  if ( moving ) {
+    moving = false;
+    var lastSlide = carouselContent.lastElementChild;
+    lastSlide.parentNode.removeChild(lastSlide);
+    carouselContent.insertBefore(lastSlide, carouselContent.firstChild);
+    removeClone();
+    var firstSlide = carouselContent.firstElementChild;
+    firstSlide.addEventListener('transitionend', activateAgain);
+    moveSlidesRight();
+  }
+}
+
+function activateAgain() {
+  var firstSlide = carouselContent.firstElementChild;
+  moving = true;
+  firstSlide.removeEventListener('transitionend', activateAgain);
+}
+
+var leftNav = document.querySelector('.nav-left');
+
+// var moveLeftAgain = true;
+
+function moveLeft() {
+  if ( moving ) {
+    moving = false;
+    removeClone();
+    var firstSlide = carouselContent.firstElementChild;
+    firstSlide.addEventListener('transitionend', replaceToEnd);
+    moveSlidesLeft();
+  }
+}
+
+function replaceToEnd() {
+  var firstSlide = carouselContent.firstElementChild;
+  firstSlide.parentNode.removeChild(firstSlide);
+  carouselContent.appendChild(firstSlide);
+  firstSlide.style.left = ( (arrayOfSlides.length -1) * lengthOfSlide) + "px";
+  addClone();
+  moving = true;
+  firstSlide.removeEventListener('transitionend', replaceToEnd);
+}
+
+carouselContent.addEventListener('mousedown', seeMovement);
+
+var initialX;
+var initialPos;
+function seeMovement(e) {
+  initialX = e.clientX;
+  getInitialPos();
+  carouselContent.addEventListener('mousemove', slightMove);
+  document.addEventListener('mouseup', moveBasedOnMouse);
+}
+
+function slightMove(e) {
+  if ( moving ) {
+    var movingX = e.clientX;
+    var difference = initialX - movingX;
+    if ( Math.abs(difference) < (lengthOfSlide/4) ) {
+      slightMoveSlides(difference);
+    }  
+  }
+}
+
+function getInitialPos() {
+  var slides = document.querySelectorAll('.slide');
+  var slidesArray = Array.prototype.slice.call(slides);
+  initialPos = [];
+  slidesArray.forEach(function(el){
+    var left = Math.floor( parseInt( el.style.left.slice(0, -2 ) ) ); 
+    initialPos.push( left );
+  });
+}
+
+function slightMoveSlides(newX) {
+  var slides = document.querySelectorAll('.slide');
+  var slidesArray = Array.prototype.slice.call(slides);
+  slidesArray.forEach(function(el, i){
+    var oldLeft = initialPos[i];
+    el.style.left = (oldLeft + newX) + "px";
+  });
+}
+
+function moveBasedOnMouse(e) { 
+  var finalX = e.clientX;
+  if ( initialX - finalX > 0) {
+    moveRight();
+  } else if ( initialX - finalX < 0 ) {
+    moveLeft();
+  }
+  document.removeEventListener('mouseup', moveBasedOnMouse);
+  carouselContent.removeEventListener('mousemove', slightMove);
+}
+// end slides
+
 sessionStorage.setItem("source","0")
 // const { session } = require("electron");
 
@@ -81,44 +255,256 @@ let mapper = ["tellerOne","tellerTwo","tellerThree","tellerFour"]
 let tickets = ["ticketsOne","ticketsTwo","ticketsThree","ticketsFour"]
 
 
+const denis = ()=>{
+	var carousel = document.querySelector('.carousel');
+	var carouselContent = document.querySelector('.carousel-content');
+	var slides = document.querySelectorAll('.slide');
+	var arrayOfSlides = Array.prototype.slice.call(slides);
+	var carouselDisplaying;
+	var screenSize;
+	setScreenSize();
+	var lengthOfSlide;
+
+	function addClone() {
+	var lastSlide = carouselContent.lastElementChild.cloneNode(true);
+	lastSlide.style.left = (-lengthOfSlide) + "px";
+	carouselContent.insertBefore(lastSlide, carouselContent.firstChild);
+	}
+
+	function removeClone() {
+	var firstSlide = carouselContent.firstElementChild;
+	firstSlide.parentNode.removeChild(firstSlide);
+	}
+
+	function moveSlidesRight() {
+	var slides = document.querySelectorAll('.slide');
+	var slidesArray = Array.prototype.slice.call(slides);
+	var width = 0;
+
+	slidesArray.forEach(function(el, i){
+		el.style.left = width + "px";
+		width += lengthOfSlide;
+	});
+	addClone();
+	}
+	moveSlidesRight();
+
+	function moveSlidesLeft() {
+	var slides = document.querySelectorAll('.slide');
+	var slidesArray = Array.prototype.slice.call(slides);
+	slidesArray = slidesArray.reverse();
+	var maxWidth = (slidesArray.length - 1) * lengthOfSlide;
+
+	slidesArray.forEach(function(el, i){
+		maxWidth -= lengthOfSlide;
+		el.style.left = maxWidth + "px";
+	});
+	}
+
+	window.addEventListener('resize', setScreenSize);
+
+	function setScreenSize() {
+	if ( window.innerWidth >= 500 ) {
+		carouselDisplaying = 6;
+	} else if ( window.innerWidth >= 300 ) {
+		carouselDisplaying = 2;
+	} else {
+		carouselDisplaying = 1;
+	}
+	getScreenSize();
+	}
+
+	function getScreenSize() {
+	var slides = document.querySelectorAll('.slide');
+	var slidesArray = Array.prototype.slice.call(slides);
+	lengthOfSlide = ( carousel.offsetWidth  / carouselDisplaying );
+	var initialWidth = -lengthOfSlide;
+	slidesArray.forEach(function(el) {
+		el.style.width = lengthOfSlide + "px";
+		el.style.left = initialWidth + "px";
+		initialWidth += lengthOfSlide;
+	});
+	}
+
+
+	var rightNav = document.querySelector('.nav-right');
+	setInterval(()=>{
+	moveLeft()
+	},1000)
+
+	var moving = true;
+	function moveRight() {
+	if ( moving ) {
+		moving = false;
+		var lastSlide = carouselContent.lastElementChild;
+		lastSlide.parentNode.removeChild(lastSlide);
+		carouselContent.insertBefore(lastSlide, carouselContent.firstChild);
+		removeClone();
+		var firstSlide = carouselContent.firstElementChild;
+		firstSlide.addEventListener('transitionend', activateAgain);
+		moveSlidesRight();
+	}
+	}
+
+	function activateAgain() {
+	var firstSlide = carouselContent.firstElementChild;
+	moving = true;
+	firstSlide.removeEventListener('transitionend', activateAgain);
+	}
+
+	var leftNav = document.querySelector('.nav-left');
+
+	// var moveLeftAgain = true;
+
+	function moveLeft() {
+	if ( moving ) {
+		moving = false;
+		removeClone();
+		var firstSlide = carouselContent.firstElementChild;
+		firstSlide.addEventListener('transitionend', replaceToEnd);
+		moveSlidesLeft();
+	}
+	}
+
+	function replaceToEnd() {
+	var firstSlide = carouselContent.firstElementChild;
+	firstSlide.parentNode.removeChild(firstSlide);
+	carouselContent.appendChild(firstSlide);
+	firstSlide.style.left = ( (arrayOfSlides.length -1) * lengthOfSlide) + "px";
+	addClone();
+	moving = true;
+	firstSlide.removeEventListener('transitionend', replaceToEnd);
+	}
+
+	carouselContent.addEventListener('mousedown', seeMovement);
+
+	var initialX;
+	var initialPos;
+	function seeMovement(e) {
+	initialX = e.clientX;
+	getInitialPos();
+	carouselContent.addEventListener('mousemove', slightMove);
+	document.addEventListener('mouseup', moveBasedOnMouse);
+	}
+
+	function slightMove(e) {
+	if ( moving ) {
+		var movingX = e.clientX;
+		var difference = initialX - movingX;
+		if ( Math.abs(difference) < (lengthOfSlide/4) ) {
+		slightMoveSlides(difference);
+		}  
+	}
+	}
+
+	function getInitialPos() {
+	var slides = document.querySelectorAll('.slide');
+	var slidesArray = Array.prototype.slice.call(slides);
+	initialPos = [];
+	slidesArray.forEach(function(el){
+		var left = Math.floor( parseInt( el.style.left.slice(0, -2 ) ) ); 
+		initialPos.push( left );
+	});
+	}
+
+	function slightMoveSlides(newX) {
+	var slides = document.querySelectorAll('.slide');
+	var slidesArray = Array.prototype.slice.call(slides);
+	slidesArray.forEach(function(el, i){
+		var oldLeft = initialPos[i];
+		el.style.left = (oldLeft + newX) + "px";
+	});
+	}
+
+	function moveBasedOnMouse(e) { 
+	var finalX = e.clientX;
+	if ( initialX - finalX > 0) {
+		moveRight();
+	} else if ( initialX - finalX < 0 ) {
+		moveLeft();
+	}
+	document.removeEventListener('mouseup', moveBasedOnMouse);
+	carouselContent.removeEventListener('mousemove', slightMove);
+	}
+}
+
+
+
+
 const getActiveTickets = (call=12) => {
 		getData(`${link}/get/active/tickets`,"POST",{"branch_id":branch_id},(data)=>{
 		let final = "";
 		let count = 0;
 		for(x in data){count++;}
 		if(count){
+			
 			let handle = $("#ticketsOne")
 			let activesHandle = $("#actives")
 			// count data final
 			let final = ""
 			let actives = ""
 			
+			let roller = Array()
+			let child = Array()
+			
+			let str = String()
+
+			str += `<div class="carousel-content">`
+			console.log(data)
 			data.map((item,index)=>{
 				let teller_number  = Number(item.teller)
-				if(data.length - 1 === index){
-					$(`#${tickets[index]}`).html(`
-						<h3>${item.code}${item.ticket}</h3><br>
-					`)
-
-					$(`#${mapper[index]}`).html(`
-						<h3>Teller ${item.teller}</h3>
-					`)
-
-				}else{
-					$(`#${tickets[index]}`).html(`
-						<h3>${item.code}${item.ticket}</h3><br>
-					`)
-
-					$(`#${mapper[index]}`).html(`
-						<h3>Teller ${item.teller}</h3>
-					`)
-				}
+				str += `<div class="slide">
+					<div class="radii" >
+							<p class="headers">TELLER ${item.teller}</p>
+							<p class="sep"> — </p>
+							<p class="tickets">${item.code} ${item.ticket}</p>
+					</div>
+				</div>`
+				
 			})
-			// handle.html(final)
-			activesHandle.html(actives)
+			str += `</div>`
+			child.push(str)
+			roller.push(child)
+			sessionStorage.setItem("roller_list",roller)
+
+
+			if(Number(sessionStorage.getItem("actives_number")) !== data.length && Number(sessionStorage.getItem("actives_number")) !== data.length  ){
+				// update
+				console.log("update")
+				sessionStorage.setItem("actives_number",data.length)
+				console.log(data.length)
+
+				console.log(sessionStorage.getItem("roller_list"))
+
+				$("#roller_list").html(sessionStorage.getItem("roller_list"))
+				// update session
+				// /
+				// setTimeout(()=>{
+					denis()
+				// },2000)
+				  
+			}else{
+				// dont update
+				// console.log("do not update")
+			}
 		}
 	})
 };
+
+getActiveTickets()
+
+
+
+$("#roller_list").html(`<div class="radii" >
+<p class="headers">TELLER 00</p>
+<p class="sep"> — </p>
+<p class="tickets">FPXR 00</p>
+</div>`)
+
+$("#roller_list").html(sessionStorage.getItem("roller_list"))
+denis()
+
+
 
 const getActiveTickets_side = (call=12) => {
 	getData(`${link}/get/active/tickets/side`,"POST",{"branch_id":branch_id},(data)=>{
@@ -135,9 +521,9 @@ const getActiveTickets_side = (call=12) => {
 		data.map((item,index)=>{
 			let teller_number  = Number(item.teller)
 			if(data.length - 1 === index){
-				actives += `<h3 class="text-muted" id="activeTicket"><h3>${item.code}${item.ticket}  —> Teller No.${item.teller}</h3></h3>`
+				actives += `<p class="text-muted sidebar" id=""><p style="font-size:28px">${item.code}${item.ticket}  — Teller No.${item.teller}</p></p>`
 			}else{
-				actives += `<h3 class="text-muted" id="activeTicket" ><h3>${item.code}${item.ticket}  —> Teller No.${item.teller}</h3></h3>`
+				actives += `<p class="text-muted sidebar" id="" ><p style="font-size:28px">${item.code}${item.ticket}  — Teller No.${item.teller}</p></p>`
 			}
 		})
 		// handle.html(final)
@@ -148,12 +534,11 @@ const getActiveTickets_side = (call=12) => {
 
 setInterval(()=>{
 	getActiveTickets()
-
-},1000)
+},2000)
 
 setInterval(()=>{
 	getActiveTickets_side()
-},1000)
+},2000)
 
 $("#settings").on("click",()=>{
 	$("#myModal").show()
