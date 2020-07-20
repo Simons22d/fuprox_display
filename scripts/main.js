@@ -1,5 +1,4 @@
 // slides
-
 var carousel = document.querySelector('.carousel');
 var carouselContent = document.querySelector('.carousel-content');
 var slides = document.querySelectorAll('.slide');
@@ -8,6 +7,12 @@ var carouselDisplaying;
 var screenSize;
 setScreenSize();
 var lengthOfSlide;
+
+setTimeout(()=>{
+	$(".vjs-modal-dialog").hide()
+},5000)
+
+
 
 function addClone() {
    var lastSlide = carouselContent.lastElementChild.cloneNode(true);
@@ -70,11 +75,10 @@ function getScreenSize() {
   });
 }
 
-
 var rightNav = document.querySelector('.nav-right');
 setInterval(()=>{
   moveLeft()
-},1000)
+},3000)
 
 var moving = true;
 function moveRight() {
@@ -255,7 +259,7 @@ let mapper = ["tellerOne","tellerTwo","tellerThree","tellerFour"]
 let tickets = ["ticketsOne","ticketsTwo","ticketsThree","ticketsFour"]
 
 
-const denis = ()=>{
+const slider = ()=>{
 	var carousel = document.querySelector('.carousel');
 	var carouselContent = document.querySelector('.carousel-content');
 	var slides = document.querySelectorAll('.slide');
@@ -329,8 +333,8 @@ const denis = ()=>{
 
 	var rightNav = document.querySelector('.nav-right');
 	setInterval(()=>{
-	moveLeft()
-	},1000)
+		moveLeft()
+	},3000)
 
 	var moving = true;
 	function moveRight() {
@@ -428,9 +432,6 @@ const denis = ()=>{
 	}
 }
 
-
-
-
 const getActiveTickets = (call=12) => {
 		getData(`${link}/get/active/tickets`,"POST",{"branch_id":branch_id},(data)=>{
 		let final = "";
@@ -450,7 +451,6 @@ const getActiveTickets = (call=12) => {
 			let str = String()
 
 			str += `<div class="carousel-content">`
-			console.log(data)
 			data.map((item,index)=>{
 				let teller_number  = Number(item.teller)
 				str += `<div class="slide">
@@ -467,7 +467,6 @@ const getActiveTickets = (call=12) => {
 			roller.push(child)
 			sessionStorage.setItem("roller_list",roller)
 
-
 			if(Number(sessionStorage.getItem("actives_number")) !== data.length && Number(sessionStorage.getItem("actives_number")) !== data.length  ){
 				// update
 				console.log("update")
@@ -475,12 +474,13 @@ const getActiveTickets = (call=12) => {
 				console.log(data.length)
 
 				console.log(sessionStorage.getItem("roller_list"))
+				console.log(sessionStorage.getItem("videoList"))
 
 				$("#roller_list").html(sessionStorage.getItem("roller_list"))
 				// update session
 				// /
 				// setTimeout(()=>{
-					denis()
+					slider()
 				// },2000)
 				  
 			}else{
@@ -495,15 +495,32 @@ getActiveTickets()
 
 
 
-$("#roller_list").html(`<div class="radii" >
-<p class="headers">TELLER 00</p>
-<p class="sep"> — </p>
-<p class="tickets">FPXR 00</p>
-</div>`)
+$("#roller_list").html(`
+<div class="carousel-content">
+	<div class="slide">
+		<div class="radii" >
+				<p class="headers">TELLER 00</p>
+				<p class="sep"> — </p>
+				<p class="tickets">FPXR 00</p>
+		</div>
+	</div>
+</div>
+`)
+
+sessionStorage.setItem('roller_list',Array(Array(`
+<div class="carousel-content">
+	<div class="slide">
+		<div class="radii" >
+				<p class="headers">TELLER 00</p>
+				<p class="sep"> — </p>
+				<p class="tickets">FPXR 00</p>
+		</div>
+	</div>
+</div>
+`)))
 
 $("#roller_list").html(sessionStorage.getItem("roller_list"))
-denis()
-
+slider()
 
 
 const getActiveTickets_side = (call=12) => {
@@ -531,14 +548,15 @@ const getActiveTickets_side = (call=12) => {
 	}
 })
 };
+getActiveTickets_side()
 
 setInterval(()=>{
 	getActiveTickets()
-},2000)
+},1000)
 
 setInterval(()=>{
 	getActiveTickets_side()
-},2000)
+},1000)
 
 $("#settings").on("click",()=>{
 	$("#myModal").show()
@@ -629,12 +647,17 @@ const prepareEncoding = (videoData) =>{
 	// here we are going to add aand remove elements from the DOM
 	if(type === 1){
 		// video link
-		myPlayer.src("./videos/"+videoData.name);
+		myPlayer.src(videoData.link+"/"+videoData.name);
 	}else if(type === 2){
 		// youtube 
-		myPlayer.src([
-			{type: "video/youtube", src: `${videoData.name}`, "techOrder": ["youtube", "html5"]}
-		]);		
+		setTimeout(()=>{
+			myPlayer.src([
+				{type: "video/youtube", src: `${videoData.name}`, "techOrder": ["youtube", "html5"]}
+			]);
+			console.log("run")
+			$(".vjs-modal-dialog").hide()
+		},5000)
+
 	}else if(type === 3){
 		// live streams
 		// the SRC should be replace with >>>> videoData.name
@@ -649,7 +672,6 @@ getAllVideos()
 
 myPlayer.on("ready",()=>{
 	// play video
-	console.log("video  ready >>>>")
 	prepareEncoding(JSON.parse(sessionStorage.videoList)[0])
 })
 

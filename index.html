@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="./styles/style.css">
 <script src="./libs/jquery/jquery-3.3.1.js"></script>
 <link href="./libs/video/video-js.css" rel="stylesheet" />
-<script src="https://unpkg.com/@videojs/http-streaming/dist/videojs-http-streaming.js"></script>
+<!--<script src="https://unpkg.com/@videojs/http-streaming/dist/videojs-http-streaming.js"></script>-->
 <!-- corousel -->
 <link rel="stylesheet" href="./styles/index.css">
 
@@ -63,16 +63,23 @@
 			<div class="row">
 				</head>		  
 			  <body>			
-				<video id="myVideo" class="video-js"
+<!--				<video id="myVideo" class="video-js"-->
+<!--					controls-->
+<!--					autoplay-->
+<!--					width="640" height="264"-->
+<!--					   data-setup='{ "techOrder": ["youtube", "html5"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=xjS6SftYQaQ"}]'-->
+<!--				>-->
+<!--			  </video>-->
+
+			<video
+					id="myVideo" class="video-js"
 					controls
-					autoplay
+					autoplay="True"
 					width="640" height="264"
-					data-setup='{}'>
-			  </video>
-			  <!-- 
-				data-setup='{ "techOrder": ["youtube", "html5"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=xjS6SftYQaQ"}] }'
-				<link href="https://unpkg.com/video.js/dist/video-js.css" rel="stylesheet">
-			   -->
+					data-setup='{ "techOrder": ["youtube","html5"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=iRusbYIyRNI"}] }'
+			>
+</video>
+
 			</div>
 		</div>
 		<div class="col-lg-4">
@@ -113,7 +120,7 @@
 					<p class="actions">Enter Your branch Activation Key <br><small>This key is allocated to you via email after registration</small></p>
 						<div id="message_key"></div>
 						<div class="form-group">
-							<label for="exampleFormControlTextarea1">Key</label>
+							<label for="key">Key</label>
 							<input class="form-control form-control-sm" id="key" rows="1" style="width:40rem;font-family:monospace;" />
 						</div>
 						<button class="btn btn btn-outline-primary btn-sm col-lg-5"  id="verifyKey" disabled>Verify</button>
