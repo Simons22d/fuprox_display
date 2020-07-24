@@ -210,6 +210,46 @@ const getData = (url,methods,data,handle) => {
 };
 
 
+
+const getActiveTickets_side = (call=12) => {
+	getData(`${link}/get/active/tickets/side`,"POST",{"branch_id":branch_id},(data)=>{
+		console.log(">>>> HERER")
+
+		let final = "";
+		let count = 0;
+		for(x in data){count++;}
+		if(count){
+			let handle = $("#ticketsOne")
+			let activesHandle = $("#actives")
+			// count data final
+			let final = ""
+			let actives = ""
+
+			data.map((item,index)=>{
+				let teller_number  = Number(item.teller)
+				if(data.length - 1 === index){
+					actives += `<p class="text-muted sidebar" id=""><p style="font-size:28px">${item.code}${item.ticket}  — Teller No.${item.teller}</p></p>`
+				}else{
+					actives += `<p class="text-muted sidebar" id="" ><p style="font-size:28px">${item.code}${item.ticket}  — Teller No.${item.teller}</p></p>`
+				}
+			})
+			// handle.html(final)
+			activesHandle.html(actives)
+		}
+	})
+};
+
+
+
+setInterval(()=>{
+	getActiveTickets_side()
+},1000)
+
+
+
+
+
+
 // let received_msg = evt.data;
 // let data = JSON.parse(received_msg);
 // // console.log(evt.data);
@@ -493,62 +533,33 @@ const getActiveTickets = (call=12) => {
 
 getActiveTickets()
 
+// $("#roller_list").html(`
+// <div class="carousel-content">
+// 	<div class="slide">
+// 		<div class="radii" >
+// 				<p class="headers">TELLER 00</p>
+// 				<p class="sep"> — </p>
+// 				<p class="tickets">FPXR 00</p>
+// 		</div>
+// 	</div>
+// </div>
+// `)
 
-
-$("#roller_list").html(`
-<div class="carousel-content">
-	<div class="slide">
-		<div class="radii" >
-				<p class="headers">TELLER 00</p>
-				<p class="sep"> — </p>
-				<p class="tickets">FPXR 00</p>
-		</div>
-	</div>
-</div>
-`)
-
-sessionStorage.setItem('roller_list',Array(Array(`
-<div class="carousel-content">
-	<div class="slide">
-		<div class="radii" >
-				<p class="headers">TELLER 00</p>
-				<p class="sep"> — </p>
-				<p class="tickets">FPXR 00</p>
-		</div>
-	</div>
-</div>
-`)))
+// sessionStorage.setItem('roller_list',Array(Array(`
+// <div class="carousel-content">
+// 	<div class="slide">
+// 		<div class="radii" >
+// 				<p class="headers">TELLER 00</p>
+// 				<p class="sep"> — </p>
+// 				<p class="tickets">FPXR 00</p>
+// 		</div>
+// 	</div>
+// </div>
+// `)))
 
 $("#roller_list").html(sessionStorage.getItem("roller_list"))
 slider()
 
-
-const getActiveTickets_side = (call=12) => {
-	getData(`${link}/get/active/tickets/side`,"POST",{"branch_id":branch_id},(data)=>{
-	let final = "";
-	let count = 0;
-	for(x in data){count++;}
-	if(count){
-		let handle = $("#ticketsOne")
-		let activesHandle = $("#actives")
-		// count data final
-		let final = ""
-		let actives = ""
-		
-		data.map((item,index)=>{
-			let teller_number  = Number(item.teller)
-			if(data.length - 1 === index){
-				actives += `<p class="text-muted sidebar" id=""><p style="font-size:28px">${item.code}${item.ticket}  — Teller No.${item.teller}</p></p>`
-			}else{
-				actives += `<p class="text-muted sidebar" id="" ><p style="font-size:28px">${item.code}${item.ticket}  — Teller No.${item.teller}</p></p>`
-			}
-		})
-		// handle.html(final)
-		activesHandle.html(actives)
-	}
-})
-};
-getActiveTickets_side()
 
 setInterval(()=>{
 	getActiveTickets()
