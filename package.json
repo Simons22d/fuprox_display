@@ -17,6 +17,6 @@
     "socketio": "^1.0.0"
   },
   "devDependencies": {
-    "electron": "^9.0.0"
+    "electron": "^9.3.1"
   }
 }
