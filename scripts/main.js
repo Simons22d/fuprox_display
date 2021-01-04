@@ -56,7 +56,7 @@ function setScreenSize() {
   if ( window.innerWidth >= 500 ) {
     carouselDisplaying = 6;
   } else if ( window.innerWidth >= 300 ) {
-    carouselDisplaying = 2;
+    carouselDisplaying = 5;
   } else {
     carouselDisplaying = 1;
   }
@@ -209,12 +209,8 @@ const getData = (url,methods,data,handle) => {
 	.then(res => handle(res));
 };
 
-
-
 const getActiveTickets_side = (call=12) => {
 	getData(`${link}/get/active/tickets/side`,"POST",{"branch_id":branch_id},(data)=>{
-		console.log(">>>> HERER")
-
 		let final = "";
 		let count = 0;
 		for(x in data){count++;}
@@ -244,8 +240,6 @@ const getActiveTickets_side = (call=12) => {
 setInterval(()=>{
 	getActiveTickets_side()
 },1000)
-
-
 
 
 
@@ -351,7 +345,7 @@ const slider = ()=>{
 	if ( window.innerWidth >= 500 ) {
 		carouselDisplaying = 6;
 	} else if ( window.innerWidth >= 300 ) {
-		carouselDisplaying = 2;
+		carouselDisplaying = 5;
 	} else {
 		carouselDisplaying = 1;
 	}
@@ -506,8 +500,8 @@ const getActiveTickets = (call=12) => {
 			child.push(str)
 			roller.push(child)
 			sessionStorage.setItem("roller_list",roller)
-
-			if(Number(sessionStorage.getItem("actives_number")) !== data.length && Number(sessionStorage.getItem("actives_number")) !== data.length  ){
+			console.log(Number(sessionStorage.getItem("actives_number")) !== data.length,Number(sessionStorage.getItem("actives_number")), data.length)
+			if(Number(sessionStorage.getItem("actives_number")) !== data.length || data.length === 1  ){
 				// update
 				console.log("update")
 				sessionStorage.setItem("actives_number",data.length)
@@ -545,20 +539,26 @@ getActiveTickets()
 // </div>
 // `)
 
-// sessionStorage.setItem('roller_list',Array(Array(`
-// <div class="carousel-content">
-// 	<div class="slide">
-// 		<div class="radii" >
-// 				<p class="headers">TELLER 00</p>
-// 				<p class="sep"> — </p>
-// 				<p class="tickets">FPXR 00</p>
-// 		</div>
-// 	</div>
-// </div>
-// `)))
+sessionStorage.setItem('roller_list',Array(Array(`
+<div class="carousel-content">
+	<div class="slide">
+		<div class="radii" >
+				<p class="headers">TELLER 00</p>
+				<p class="sep"> — </p>
+				<p class="tickets">FPXR 00</p>
+		</div>
+	</div>
+</div>
+`)))
 
-$("#roller_list").html(sessionStorage.getItem("roller_list"))
-slider()
+
+
+setTimeout(()=>{
+	$("#roller_list").html(sessionStorage.getItem("roller_list"))
+	slider()
+},1000)
+
+
 
 
 setInterval(()=>{
