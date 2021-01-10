@@ -637,7 +637,7 @@ var index = 1;
 // get the video location
 setInterval(()=>{
 	getAllVideos()
-},1000)
+},500)
 
 // working with video.js 
 // ------------------
@@ -667,7 +667,7 @@ const prepareEncoding = (videoData) =>{
 			]);
 			console.log("run")
 			$(".vjs-modal-dialog").hide()
-		},5000)
+		},500)
 
 	}else if(type === 3){
 		// live streams
