@@ -264,7 +264,7 @@ const getActiveTickets_side = (call=12) => {
 
 setInterval(()=>{
 	getActiveTickets_side()
-},1000)
+},3000)
 
 
 
