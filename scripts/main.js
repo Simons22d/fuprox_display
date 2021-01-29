@@ -204,6 +204,7 @@ $("#set_server_ip").on("click",()=>{
 		localStorage.setItem("server_ip",server_ip)
 		$("#server_ip").attr("placeholder",`Currently Set As '${addr}'`)
 		$("#message_ip").html(`<div class="alert alert-success" role="alert">Success! Make sure to restart app.<br> for changes to take effect</div>`)
+		reload()
 	}
 })
 
@@ -635,6 +636,7 @@ const verifyKey = (key) => {
 			localStorage.setItem("branch_info",JSON.stringify(data))
 			$("#verifyKey").prop("disabled",true)
 			$("#key").removeClass("is-invalid")
+			reload()
 		}else{
 			// key not valid
 			// replace dowm with on invalid key
@@ -735,6 +737,13 @@ window.addEventListener("load", () => {
 
 
 
+const reload = () => {
+	setTimeout(()=>{
+		document.location.reload()
+	},1000)
+}
+
+
 // get play type  selected 
 // add the default video tag then 
 // play 
@@ -768,3 +777,4 @@ data-setup='{ "techOrder": ["youtube", "html5"], "sources": [{ "type": "video/yo
 
 >> v_links 
 */
+
