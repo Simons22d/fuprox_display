@@ -694,7 +694,7 @@ const prepareEncoding = (videoData) =>{
 			]);
 			console.log("run")
 			$(".vjs-modal-dialog").hide()
-		},500)
+		},100)
 
 	}else if(type === 3){
 		// live streams
