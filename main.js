@@ -11,8 +11,8 @@ const {globalShortcut } = require('electron')
 function createWindows() {
     // fullscreen : true,
     win = new BrowserWindow({
-                height:900,
-                width: 1500,    
+                height:600,
+                width: 1000,    
                 allowRendererProcessReuse : true,
                 autoHideMenuBar  : true,
                 fullscreen : true,
@@ -21,7 +21,7 @@ function createWindows() {
     })
     // alwaysOnTop : true,
     // minimizable : false,
-    resizable :false,
+    // resizable :false,
 
     // win.webContents.openDevTools()
 
