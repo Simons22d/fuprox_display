@@ -15,6 +15,7 @@ function createWindows() {
                 width: 1500,    
                 allowRendererProcessReuse : true,
                 autoHideMenuBar  : true,
+                fullscreen : true,
     })
     // alwaysOnTop : true,
     // minimizable : false,
