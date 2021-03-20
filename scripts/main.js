@@ -250,9 +250,9 @@ const getActiveTickets_side = (call=12) => {
 			data.map((item,index)=>{
 				let teller_number  = Number(item.teller)
 				if(data.length - 1 === index){
-					actives += `<p class="text-muted sidebar" id=""><p style="font-size:28px">${item.code}${item.ticket}  — Teller No.${item.teller}</p></p>`
+					actives += `<p class="text-muted sidebar" id=""><p style="font-size:18px">${item.code}${item.ticket}  — Teller No.${item.teller}</p></p>`
 				}else{
-					actives += `<p class="text-muted sidebar" id="" ><p style="font-size:28px">${item.code}${item.ticket}  — Teller No.${item.teller}</p></p>`
+					actives += `<p class="text-muted sidebar" id="" ><p style="font-size:18px">${item.code}${item.ticket}  — Teller No.${item.teller}</p></p>`
 				}
 			})
 			// handle.html(final)

@@ -70,7 +70,10 @@
 }
 
 #branch{
-  font-size:24px;
+  font-size:14px;
+}
+#date{
+  font-size:14px;
 }
 
 .container_slider{
