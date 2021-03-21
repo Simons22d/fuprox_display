@@ -12,8 +12,6 @@ setTimeout(()=>{
 	$(".vjs-modal-dialog").hide()
 },5000)
 
-
-
 function addClone() {
    var lastSlide = carouselContent.lastElementChild.cloneNode(true);
    lastSlide.style.left = (-lengthOfSlide) + "px";
@@ -627,24 +625,34 @@ $("#key").on("input",(e)=>{
 })
 
 
-const verifyKey = (key) => {
-	getData(`${link}/branch/by/key`,"POST",{"key" : key},(data)=>{
-		if (data.status){
-			// #store key in localStorage
-			$("#message_key").html(`<div class="alert alert-success" role="alert">Valid Key</div>`)
-			localStorage.setItem("key",key)
+
+const verifyKey = (me) => {
+	let key = $("#key").val()
+	console.log(key)
+	getData(`${link}/app/activate`,"POST",{"key" : key},(data)=>{
+		console.log(data)
+		if(data){
+			console.log("Data available")
+			localStorage.setItem("key",data["key_"])
 			localStorage.setItem("branch_info",JSON.stringify(data))
-			$("#verifyKey").prop("disabled",true)
-			$("#key").removeClass("is-invalid")
-			reload()
+			$("#branch").html(data.name)
+			$("#date").html(new Date())
+			$("#services").show()
+
 		}else{
-			// key not valid
-			// replace dowm with on invalid key
-			$("#message_key").html(`<div class="alert alert-danger" role="alert">Key Is Not Valid</div>`)
-			$("#key").addClass("is-invalid")
+			// app not activated
+			$("#branch").html(`
+			<img src="./images/key.png" alt="" height="40px" class="mt-3">
+			<div class="mt-2">Error! Application not activated</div>
+			<div class="text-muted">Please make sure you active the application from the backend provided</div>
+			`)
+			$("#services").hide()
 		}
 	})
 }
+
+verifyKey()
+
 
 $("#verifyKey").on("click",()=>{
 	let key = $("#key").val()
