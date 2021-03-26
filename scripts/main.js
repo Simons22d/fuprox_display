@@ -12,6 +12,40 @@ setTimeout(()=>{
 	$(".vjs-modal-dialog").hide()
 },5000)
 
+let addr = localStorage.getItem("server_ip")
+
+/*START SOCKET */
+
+const sio = io(`http://${addr}:5500/`);
+
+
+sio.on('connect', () => {
+	console.log('connected');
+  
+  });
+  
+  sio.on('disconnect', () => {
+	console.log('disconnected');
+  });
+  
+  sio.on('hello_data', () => {
+	console.log('hello_data');
+	getActiveTickets_side()
+	getActiveTickets()
+  });
+
+  sio.on("next_ticket_data",()=>{
+	console.log("next_ticket_data")
+	getActiveTickets_side()
+	getActiveTickets()
+  })
+
+  
+/*END SOCKET */
+
+
+
+
 function addClone() {
    var lastSlide = carouselContent.lastElementChild.cloneNode(true);
    lastSlide.style.left = (-lengthOfSlide) + "px";
@@ -181,7 +215,7 @@ let country_id = 1;
 const key = "080b988760e1b4e769be96a125bc38d381d41a8133539fe03a1de1bccafc7a79dad93e987e5505d78ff53b128df7564255509e7de2950cb5e957e78355fa09a5f77a10787f12bf4f4066223225dca3f1f162665cbcb3b936aab784b34be80fe3b68ea195c156cc0272cc28902b2fefc44e96508e5553734a06e3b085bca8907cfdeb2e6cfd2786ca27cbc7876318e3eb9d7c9b40cf4287ca6857615435b53bcfc46db3718c57e07b3be9951a97615e981d33b4611be6011a8f4d39de82a21a3382fdaa3531a3a610b64740515f840512472347297fcb9caebffffec35aa24abb0f9d2dd94595e3190db4897b1e205ae129feca90f8abd785428867e238bb4013484f978c83d30fa7fdbfcd3115ca87fc84d03ec6e9e7a1dacbe83300711581ee7edc6d843b22eda5a0cdd80d8b83d729b4505075329017d663e56990391aaaebe25bc90c075b5bdf824db7562550713c1215d7b623f5d7cbd07bb6e6f4783984e577b833daf17dcafb4d45638f655098d0852e2cfc3fccc05409ae9b7396786cd45f01d11dd6e11a6d3715359a7bb9bfa6ab28b993c6700177dd41aa5a076023a6324ff8f9a538ff4597c25d9e5784de256b44f6152d482759b4f61666e1a710bd9e644f3f9e98ad066658bde80f5f4aa0e3aac7fced121292042d0bfb19d425dda8bd5defbaa069e04ce012d573300bf77a9fc5cd7c697b2744b38acc2957db0fb64a9fdb91dc6d96825976f1a1ab6cb17598ecc14a79138e7fe421105b4bce660981ec8172fb4cab6fc5579b1cc5a8d32872ca3b69a290e618fa90355733993cc23cde190710d9db7f4ff1e467846a02898a1f4e88340c8d81b26215512743a6036b1fc1fbac7698861298c4dec15c2572162ea3c2331fc7a650c8917447134632058d37b9de9b552fe6e5583b839d686fca20bc5098f06758d93bcad8ab6f54d2592e7aecfd2f2e7cc8c62e25dabefe70fb3d8903956f86eadb72a49079a047bfe4183b922fdd73c8278b3d2cc450320edf7e8e7e97dafc7a79c1b5e83594fa5bfce1c0bf7ac2999399850c49a13b637725b66d54cfc9129eb8a26091fef7755573076858bfa534b7076fedda1429a0c8a5f8b650d71408d80419d15afca8bded6e4ef0355101b5c80115600da758b2255832b0700c26f9f4457bb2e131726130faa7e4232a0933fb863bf3d8af497331d3c1d6b7332b9f4d1e3a420f6af9329840cb763e2486f7932c87d9f6fc4939891d6a4d4a244b6b7c387adb6e9fbc83dd0e93cc970e40e8856a88c83ab319f349172bba8c91a643b4513addff812771899ccd13a061eb896a5736d8b7e1206ae7ed00b8f2b36e26de5b99f9e05636a5dd4f3b50cbddc34f88d9938d0dce152bfde1f70c022700b310a10e7cf7eee55961f720d97f6752e46eb50d5e8330f5815b88abe5c8e8d4c2466af4e35d4cff"
 
 
-let addr = localStorage.getItem("server_ip")
+
 let link = `http://${addr}:1000`
 
 //setting the key
@@ -214,7 +248,7 @@ online_status.removeClass("offline");
 
 let branch_id;
 try {
-  branch_id = JSON.parse(localStorage.getItem("branch_info")).msg.id
+  branch_id = JSON.parse(localStorage.getItem("branch_info")).id
 }
 catch(error) {
 	branch_id = 2 || 1
@@ -235,6 +269,8 @@ const getData = (url,methods,data,handle) => {
 
 const getActiveTickets_side = (call=12) => {
 	getData(`${link}/get/active/tickets/side`,"POST",{"branch_id":branch_id},(data)=>{
+		console.log(">>>>>",branch_id)
+		console.log("???????",data)
 		let final = "";
 		let count = 0;
 		for(x in data){count++;}
@@ -259,11 +295,11 @@ const getActiveTickets_side = (call=12) => {
 	})
 };
 
+getActiveTickets_side()
 
-
-setInterval(()=>{
-	getActiveTickets_side()
-},3000)
+// setInterval(()=>{
+// 	getActiveTickets_side()
+// },3000)
 
 
 
@@ -304,7 +340,7 @@ setTimeout(()=>{
 	let key = localStorage.getItem("key")
 	getData(`${link}/branch/by/key`,"POST",{"key" : key},(data)=>{
 		if(data.status){
-			$("#branch").html(data.msg.name)
+			$("#branch").html(data.name)
 			$("#date").html(new Date())
 		}else{
 			$("#branch").html("——")
@@ -450,13 +486,13 @@ const slider = ()=>{
 	}
 
 	function slightMove(e) {
-	if ( moving ) {
-		var movingX = e.clientX;
-		var difference = initialX - movingX;
-		if ( Math.abs(difference) < (lengthOfSlide/4) ) {
-		slightMoveSlides(difference);
-		}  
-	}
+		if ( moving ) {
+			var movingX = e.clientX;
+			var difference = initialX - movingX;
+			if ( Math.abs(difference) < (lengthOfSlide/4) ) {
+			slightMoveSlides(difference);
+			}  
+		}
 	}
 
 	function getInitialPos() {
@@ -510,6 +546,7 @@ const getActiveTickets = (call=12) => {
 
 			str += `<div class="carousel-content">`
 			data.map((item,index)=>{
+				console.log(item)
 				let teller_number  = Number(item.teller)
 				str += `<div class="slide">
 					<div class="radii" >
@@ -526,21 +563,9 @@ const getActiveTickets = (call=12) => {
 			sessionStorage.setItem("roller_list",roller)
 			console.log(Number(sessionStorage.getItem("actives_number")) !== data.length,Number(sessionStorage.getItem("actives_number")), data.length)
 			if(Number(sessionStorage.getItem("actives_number")) !== data.length || data.length === 1  ){
-				// update
-				console.log("update")
 				sessionStorage.setItem("actives_number",data.length)
-				console.log(data.length)
-
-				console.log(sessionStorage.getItem("roller_list"))
-				console.log(sessionStorage.getItem("videoList"))
-
 				$("#roller_list").html(sessionStorage.getItem("roller_list"))
-				// update session
-				// /
-				// setTimeout(()=>{
-					slider()
-				// },2000)
-				  
+				slider()
 			}else{
 				// dont update
 				// console.log("do not update")
@@ -551,25 +576,13 @@ const getActiveTickets = (call=12) => {
 
 getActiveTickets()
 
-// $("#roller_list").html(`
-// <div class="carousel-content">
-// 	<div class="slide">
-// 		<div class="radii" >
-// 				<p class="headers">TELLER 00</p>
-// 				<p class="sep"> — </p>
-// 				<p class="tickets">FPXR 00</p>
-// 		</div>
-// 	</div>
-// </div>
-// `)
-
 sessionStorage.setItem('roller_list',Array(Array(`
 <div class="carousel-content">
 	<div class="slide">
 		<div class="radii" >
 				<p class="headers">TELLER 00</p>
 				<p class="sep"> — </p>
-				<p class="tickets">FPXR 00</p>
+				<p class="tickets">NOQUE 00</p>
 		</div>
 	</div>
 </div>
@@ -585,13 +598,13 @@ setTimeout(()=>{
 
 
 
-setInterval(()=>{
-	getActiveTickets()
-},1000)
+// setInterval(()=>{
+// 	getActiveTickets()
+// },1000)
 
-setInterval(()=>{
-	getActiveTickets_side()
-},1000)
+// setInterval(()=>{
+// 	getActiveTickets_side()
+// },1000)
 
 $("#settings").on("click",()=>{
 	$("#myModal").show()
@@ -672,7 +685,7 @@ var index = 1;
 // get the video location
 setInterval(()=>{
 	getAllVideos()
-},500)
+},3000)
 
 // working with video.js 
 // ------------------
@@ -750,39 +763,4 @@ const reload = () => {
 		document.location.reload()
 	},1000)
 }
-
-
-// get play type  selected 
-// add the default video tag then 
-// play 
-// listen for end event
-
-// what to change for each category 
-/*
->> youtube 
-data-setup='{ "techOrder": ["youtube", "html5"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=xjS6SftYQaQ"}] }'
-
-
->> stream 
-</head>
-<body>
-<h1>Video.js Example Embed</h1>
-
-<video-js id="my_video_1" class="vjs-default-skin" controls preload="auto" width="640" height="268">
-	<source src="https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8" type="application/x-mpegURL">
-</video-js>
-
-<script src="https://unpkg.com/video.js/dist/video.js"></script>
-<script src="https://unpkg.com/@videojs/http-streaming/dist/videojs-http-streaming.js"></script>
-
-<script>
-	var player = videojs('my_video_1');
-</script>
-
-
-
-// ading data to youtube >> videojs.options.autoplay = true;
-
->> v_links 
-*/
 

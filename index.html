@@ -11,8 +11,7 @@
 <!--<script src="https://unpkg.com/@videojs/http-streaming/dist/videojs-http-streaming.js"></script>-->
 <!-- corousel -->
 <link rel="stylesheet" href="./styles/index.css">
-
-
+<script src="./libs/socket.io.js"></script>
 
 <style>
 	.arrow{
@@ -70,14 +69,6 @@
 			<div class="row">
 				</head>		  
 			  <body>			
-<!--				<video id="myVideo" class="video-js"-->
-<!--					controls-->
-<!--					autoplay-->
-<!--					width="640" height="264"-->
-<!--					   data-setup='{ "techOrder": ["youtube", "html5"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=xjS6SftYQaQ"}]'-->
-<!--				>-->
-<!--			  </video>-->
-
 			<video
 					id="myVideo" class="video-js"
 					controls
@@ -88,7 +79,7 @@
 
 			</div>
 		</div>
-		<div class="col-lg-2">
+		<div class="col-lg-3">
 			<h5 class="text-muted">Tickets Order</h5>
 			<hr>
 			<div id="actives">
