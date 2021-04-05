@@ -582,7 +582,7 @@ sessionStorage.setItem('roller_list',Array(Array(`
 		<div class="radii" >
 				<p class="headers">TELLER 00</p>
 				<p class="sep"> — </p>
-				<p class="tickets">NOQUE 00</p>
+				<p class="tickets">NOQ 00</p>
 		</div>
 	</div>
 </div>
