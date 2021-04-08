@@ -649,7 +649,7 @@ const verifyKey = (me) => {
 			localStorage.setItem("key",data["key_"])
 			localStorage.setItem("branch_info",JSON.stringify(data))
 			$("#branch").html(data.name)
-			$("#date").html(new Date())
+			$("#date").html(data["today"])
 			$("#services").show()
 
 		}else{
