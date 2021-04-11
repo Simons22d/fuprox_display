@@ -23,7 +23,7 @@ function createWindows() {
     // minimizable : false,
     // resizable :false,
 
-    win.webContents.openDevTools()
+    // win.webContents.openDevTools()
 
     win.loadURL(url.format({
         pathname:path.join(__dirname,'index.html'),
