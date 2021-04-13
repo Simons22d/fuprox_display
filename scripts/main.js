@@ -641,7 +641,6 @@ $("#key").on("input",(e)=>{
 
 const verifyKey = (me) => {
 	let key = $("#key").val()
-	console.log(key)
 	getData(`${link}/app/activate`,"POST",{"key" : key},(data)=>{
 		console.log(data)
 		if(data){
@@ -649,7 +648,7 @@ const verifyKey = (me) => {
 			localStorage.setItem("key",data["key_"])
 			localStorage.setItem("branch_info",JSON.stringify(data))
 			$("#branch").html(data.name)
-			$("#date").html(data["today"])
+			$("#date_").html(data["today"])
 			$("#services").show()
 
 		}else{
@@ -667,15 +666,7 @@ const verifyKey = (me) => {
 verifyKey()
 
 
-$("#verifyKey").on("click",()=>{
-	let key = $("#key").val()
-	if(key) {
-	//	message_key
-		verifyKey(key)
-	}else {
-		$("#message_key").html(`<div class="alert alert-danger" role="alert">Key cannot Be empty</div>`)
-	}
-})
+
 var index = 1;
 // mean that the show method method is set to be 
 // local_files 
