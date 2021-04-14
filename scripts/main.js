@@ -269,8 +269,6 @@ const getData = (url,methods,data,handle) => {
 
 const getActiveTickets_side = (call=12) => {
 	getData(`${link}/get/active/tickets/side`,"POST",{"branch_id":branch_id},(data)=>{
-		console.log(">>>>>",branch_id)
-		console.log("???????",data)
 		let final = "";
 		let count = 0;
 		for(x in data){count++;}
@@ -296,45 +294,6 @@ const getActiveTickets_side = (call=12) => {
 };
 
 getActiveTickets_side()
-
-// setInterval(()=>{
-// 	getActiveTickets_side()
-// },3000)
-
-
-
-
-// let received_msg = evt.data;
-// let data = JSON.parse(received_msg);
-// // console.log(evt.data);
-// if(data){
-// 	console.log(data)
-// 	if(data.active){
-// 		let active = data.active
-// 	}
-// 	if(data.tellers){
-// 		data.tellers.map((value,index)=>{
-// 			$(`#${mapper[index]}`).html(`<h5>Teller ${value.number}</h5>`)
-// 		})
-// 	}
-// 	if(data.active_tickets){
-// 		data.active_tickets.map((value,index)=>{
-// 			if(Number(value.teller) === 1){
-// 				$(`#ticketsOne`).html(value.teller)
-// 			}
-// 		})
-//
-// 	}
-// 	if(data.next_ticket){
-// 		console.log(data.next_ticket)
-// 	}
-// 	if(data.upcoming_tickets){
-// 		console.log("upcoming tickets",data.upcoming_tickets)
-//
-// 	}
-//
-// }
-
 
 setTimeout(()=>{
 	let key = localStorage.getItem("key")

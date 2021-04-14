@@ -33,21 +33,7 @@ function createWindows() {
             nodeIntegration: true
         }
     }))
-    // win.setMenu(null)
 }
-
-
-// ipcMain.on('asynchronous-message', (event, arg) => {
-//   console.log(arg)
-//   let interval  = setInterval(()=>{
-//     event.reply('asynchronous-reply', users_token)
-//   },1000)
-  
-//    setTimeout(()=>{
-//       clearInterval(interval)
-//   },60000)
-// })
-
 
 app.on('ready',() =>{
     createWindows()
