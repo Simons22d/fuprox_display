@@ -43,7 +43,7 @@ sio.on('connect', () => {
   
 /*END SOCKET */
 
-
+reload()
 
 
 function addClone() {
