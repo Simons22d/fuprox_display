@@ -8,6 +8,13 @@ var screenSize;
 setScreenSize();
 var lengthOfSlide;
 
+const reload = () => {
+	setTimeout(()=>{
+		document.location.reload()
+	},1000)
+}
+
+
 setTimeout(()=>{
 	$(".vjs-modal-dialog").hide()
 },5000)
@@ -21,7 +28,6 @@ const sio = io(`http://${addr}:5500/`);
 
 sio.on('connect', () => {
 	console.log('connected');
-  
   });
   
   sio.on('disconnect', () => {
@@ -40,11 +46,13 @@ sio.on('connect', () => {
 	getActiveTickets()
   })
 
+// video_refresh_data
+sio.on("video_refresh_data",()=>{
+	console.log("video reload")
+	getAllVideosEvt()
+})
   
 /*END SOCKET */
-
-reload()
-
 
 function addClone() {
    var lastSlide = carouselContent.lastElementChild.cloneNode(true);
@@ -86,9 +94,9 @@ window.addEventListener('resize', setScreenSize);
 
 function setScreenSize() {
   if ( window.innerWidth >= 500 ) {
-    carouselDisplaying = 6;
+    carouselDisplaying = 7;
   } else if ( window.innerWidth >= 300 ) {
-    carouselDisplaying = 5;
+    carouselDisplaying = 6;
   } else {
     carouselDisplaying = 1;
   }
@@ -111,6 +119,7 @@ var rightNav = document.querySelector('.nav-right');
 setInterval(()=>{
   moveLeft()
 },3000)
+
 
 var moving = true;
 function moveRight() {
@@ -225,7 +234,6 @@ setTimeout(()=>{
 		$("#server_ip").attr("placeholder",`Currently Set As '${addr}'`)
 	}else{
 		$("#server_ip").attr("placeholder",`Please Set Address Before using app.`)
-
 	}
 },500)
 
@@ -644,7 +652,17 @@ var myPlayer = videojs('myVideo');
 
 const getAllVideos = () =>{
 	getData(`${link}/video/active`,"POST","",(data)=>{
+		sessionStorage.setItem("videoList",JSON.stringify([]))
 		sessionStorage.setItem("videoList",JSON.stringify(data))
+	})
+}
+const getAllVideosEvt = () =>{
+	getData(`${link}/video/active`,"POST","",(data)=>{
+		sessionStorage.setItem("videoList",JSON.stringify([]))
+		sessionStorage.setItem("videoList",JSON.stringify(data))
+		if(! JSON.parse(sessionStorage.getItem("videoList")).length >=1){
+			reload()
+		}
 	})
 }
 
@@ -652,8 +670,8 @@ const prepareEncoding = (videoData) =>{
 	let type = videoData.type
 	console.log("video Type",videoData)
 	// modify DOM
-	let handle = $("myVideo")
-	// here we are going to add aand remove elements from the DOM
+	let handle = $("#myVideo")
+	// here we are going to add and remove elements from the DOM
 	if(type === 1){
 		// video link
 		myPlayer.src(videoData.link+"/"+videoData.name);
@@ -676,7 +694,7 @@ const prepareEncoding = (videoData) =>{
 	}
 }
 
-// getall videos 
+// get all videos
 getAllVideos()
 
 myPlayer.on("ready",()=>{
@@ -689,7 +707,7 @@ let vid_count=1
 myPlayer.on("ended",()=>{
 	console.log(vid_count)
 	if (vid_count === JSON.parse(sessionStorage.videoList).length){
-		vid_count = 0;
+		vid_count = 1;
 	}
 	prepareEncoding(JSON.parse(sessionStorage.videoList)[vid_count])
 	vid_count++;
@@ -708,9 +726,4 @@ window.addEventListener("load", () => {
 
 
 
-const reload = () => {
-	setTimeout(()=>{
-		document.location.reload()
-	},1000)
-}
 
